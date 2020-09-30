@@ -1,9 +1,11 @@
 import React from 'react';
+import Modal from './Modal';
 
 const TodoButton = () => {
   const openAddTodoPopup = () => {
     // e.preventDefault();
-    console.log('Clicked todo-button!');
+    // <Modal />;
+    console.log('klikka');
   };
   return (
     <button onClick={openAddTodoPopup} type="button">

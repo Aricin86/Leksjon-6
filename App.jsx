@@ -11,10 +11,29 @@ import TodoCardList from './src/components/TodoCardList';
 // 'https://data.brreg.no/enhetsregisteret/api/enheter?konkurs=false&organisasjonsnummer=';
 
 const pageTitle = 'Your Online Todo App';
+const todoList = [
+  {
+    id: 1,
+    title: 'Title #1',
+    author: 'Jane',
+    description: 'Do this and that and then some',
+  },
+  {
+    id: 2,
+    title: 'Randomly Generated',
+    author: 'Joe',
+    description: 'More stuff to do.',
+  },
+];
 
 const App = () => {
   const [search, setSearch] = useState('');
   const [data, setData] = useState('');
+  // const [todoInfo, setTodoInfo] = useState('');
+
+  // const fetchTodoInfo = () => {
+  //   setTodoInfo(todoList);
+  // };
 
   // fetching data
   // const fetchData = async () => {
@@ -35,7 +54,7 @@ const App = () => {
       </header>
       <main>
         <TodoButton />
-        <TodoCardList />
+        <TodoCardList list={todoList} />
 
         {/* <Search handleSearch={handleSearch} search={search} />
         <button onClick={fetchData} type="button">
