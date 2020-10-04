@@ -1,15 +1,13 @@
-import React from 'react';
-import Modal from './Modal';
+import React, { useState } from 'react';
 
-const TodoButton = () => {
-  const openAddTodoPopup = () => {
-    // e.preventDefault();
-    // <Modal />;
-    console.log('klikka');
+const TodoButton = ({ toggleModal }) => {
+  const openModal = (event) => {
+    toggleModal(event);
   };
+
   return (
-    <button onClick={openAddTodoPopup} type="button">
-      <i className="fas fa-plus" /> Todo
+    <button onClick={openModal} type="button" id="btn-add-todo">
+      Todo
     </button>
   );
 };
