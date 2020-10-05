@@ -5,32 +5,29 @@ import TodoButton from './src/components/TodoButton';
 import Modal from './src/components/Modal';
 import TodoCardList from './src/components/TodoCardList';
 import CompletedList from './src/components/CompletedList';
-// import Search from './src/components/Search';
-// import List from './src/components/List';
-
-// const URL =
-// 'https://data.brreg.no/enhetsregisteret/api/enheter?konkurs=false&organisasjonsnummer=';
 
 const pageTitle = 'Your Online Todo App';
 
 const App = () => {
-  // const [search, setSearch] = useState('');
-  // const [data, setData] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [idCounter, setIdCounter] = useState(0);
+  const [todoList, setTodoList] = useState([]);
+  const [completedTodoList, setCompletedTodoList] = useState([]);
+  const [search, setSearch] = useState('');
+  const [filteredTodoList, setFilteredTodoList] = useState([]);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     author: '',
   });
-  const [todoList, setTodoList] = useState([]);
-  const [completedTodoList, setCompletedTodoList] = useState([]);
 
   const toggleModal = () => {
     setShowModal((modalOpen) => !modalOpen);
   };
 
   const addTodo = () => {
-    setTodoList((prev) => [{ id: todoList.length, ...formData }, ...prev]);
+    setIdCounter(idCounter + 1);
+    setTodoList((prev) => [{ id: idCounter, ...formData }, ...prev]);
     toggleModal();
   };
 
@@ -39,24 +36,59 @@ const App = () => {
     setTodoList(updatedTodoList);
   };
 
+  const createCurrentDateTime = () => {
+    const newDate = new Date();
+    let hours = newDate.getHours();
+    let minutes = newDate.getMinutes();
+    let seconds = newDate.getSeconds();
+
+    if (hours < 10) {
+      hours = `0${hours}`;
+    }
+
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+
+    const newDateTime = `${`0${newDate.getDate()}`.slice(-2)}.${`0${
+      newDate.getMonth() + 1
+    }`.slice(-2)}.${newDate.getFullYear()} - ${hours}:${minutes}:${seconds}`;
+    return newDateTime;
+  };
+
+  const searchingTodos = () => {
+    if (search.length <= 0) {
+      setFilteredTodoList(completedTodoList);
+      return;
+    }
+
+    setFilteredTodoList(
+      completedTodoList.filter((todo) =>
+        todo.title.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  };
+
   const addCompletedTodo = (id) => {
     setCompletedTodoList((prev) => [
-      { date: new Date(), ...formData },
+      { id, ...formData, date: createCurrentDateTime() },
+      ...prev,
+    ]);
+    setFilteredTodoList((prev) => [
+      { id, ...formData, date: createCurrentDateTime() },
       ...prev,
     ]);
     deleteTodo(id);
   };
 
-  // fetching data
-  // const fetchData = async () => {
-  //   const response = await fetch(URL + search);
-  //   const companyData = await response.json();
-  //   setData(companyData._embedded.enheter);
-  // };
-
-  // const handleSearch = (e) => {
-  //   setSearch(e.target.value);
-  // };
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    searchingTodos();
+  };
 
   return (
     <>
@@ -71,7 +103,12 @@ const App = () => {
           deleteTodo={deleteTodo}
           addCompletedTodo={addCompletedTodo}
         />
-        <CompletedList list={completedTodoList} />
+        <CompletedList
+          list={filteredTodoList}
+          handleSearch={handleSearch}
+          search={search}
+          searchingTodos={searchingTodos}
+        />
         {showModal && (
           <Modal
             toggleModal={toggleModal}
@@ -80,11 +117,6 @@ const App = () => {
             setFormData={setFormData}
           />
         )}
-        {/* <Search handleSearch={handleSearch} search={search} />
-        <button onClick={fetchData} type="button">
-          Søk
-        </button>
-        <List list={data} /> */}
       </main>
     </>
   );

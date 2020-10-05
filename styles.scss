@@ -215,8 +215,8 @@ form {
   margin-right: 5px;
 }
 
-#table-section form label + input {
-  margin-right: 80px;
+#table-section form button {
+  margin: 0 100px 0 5px;
 }
 
 /** CHECKMARK **/
@@ -306,6 +306,11 @@ form {
   background-color: #e6e6e6;
 }
 
+#tbl-empty-row td {
+  padding: 20px 0;
+  text-align: center;
+}
+
 .tbl-row {
   font-weight: 400;
   font-size: 14px;
@@ -314,7 +319,7 @@ form {
 
 .tbl-row td {
   padding: 13px 0 13px 35px;
-  // border-bottom: 2px solid rgb(129, 142, 148, 0.1);
+  border-bottom: 2px solid rgba(129, 142, 148, 0.1);
 }
 
 /* Just to help make it look pretty when the window is resized */

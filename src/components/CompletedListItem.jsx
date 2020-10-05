@@ -1,11 +1,11 @@
 import React from 'react';
 
-const CompletedListItem = ({ title, author, description }) => (
+const CompletedListItem = ({ title, author, description, date }) => (
   <tr className="tbl-row">
     <td>{title}</td>
     <td>{author}</td>
     <td>{description}</td>
-    <td>xx.xx.xx</td>
+    <td>{date}</td>
   </tr>
 );
 

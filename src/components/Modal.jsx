@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 
-const Modal = ({ toggleModal, addTodo, formData, setFormData }) => {
+const Modal = ({ toggleModal, addTodo, setFormData }) => {
   const [charLeft, setCharLeft] = useState('');
-
-  const handleCharInputChange = (e) => {
-    setCharLeft(50 - e.target.value.length);
-  };
 
   const closeModal = (event) => {
     toggleModal(event);
@@ -22,6 +18,11 @@ const Modal = ({ toggleModal, addTodo, formData, setFormData }) => {
       ...prev,
       ...inputValue,
     }));
+  };
+
+  const handleChange = (e) => {
+    setCharLeft(50 - e.target.value.length);
+    updateValue(e);
   };
 
   return (
@@ -50,7 +51,7 @@ const Modal = ({ toggleModal, addTodo, formData, setFormData }) => {
           <input
             type="text"
             name="description"
-            onChange={(handleCharInputChange, updateValue)}
+            onChange={handleChange}
             placeholder="Short description"
             maxLength="50"
           />

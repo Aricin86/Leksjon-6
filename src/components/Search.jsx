@@ -7,17 +7,14 @@ const Search = ({ search, handleSearch }) => {
 
   return (
     <>
-      {search && <p>Søker etter org.nr: {search}</p>}
-      <form id="search">
-        <label htmlFor="search">Søk: </label>
-        <input
-          type="text"
-          id="search"
-          placeholder="org.nr"
-          onChange={handleChange}
-          value={search}
-        />
-      </form>
+      <label htmlFor="search">Search: </label>
+      <input
+        type="text"
+        id="search"
+        placeholder="for title"
+        onChange={handleChange}
+        value={search}
+      />
     </>
   );
 };
